@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { memo, Suspense, useState } from "react";
 import Cards from "./Cards";
 import Carts from "./Carts";
 import type { CardType } from "../type";
@@ -10,24 +10,39 @@ const cardsPromise = async (): Promise<CardType[]> => {
     return data;
 }
 
-export default function Technology() {
+const Technology = memo(function Technology() {
+
+    const [carts, setCarts] = useState<CardType[]>([]);
+
+    const handleCards = (newCart: CardType) => {
+        setCarts([
+            ...carts,
+            newCart]
+        );
+    }
+
     return (
         <>
-            <div className="max-w-7xl mx-auto flex justify-around items-center">
-                <div className="w-[70%] font-mono text-indigo-200">
-                    <div className="mx-3.5">
-                        <h2>Never Stop Learning</h2>
-                        <h3>You can learn from our amazing blogs..</h3>
-                    </div>
+            <div className="mx-3.5">
+                <h2>Never Stop Learning</h2>
+                <h3>You can learn from our amazing blogs..</h3>
+                <div className="max-w-7xl mx-auto flex justify-around gap-5">
 
-                    <Suspense fallback={<h2>Loading...</h2>}>
-                        <Cards cardsPromise={cardsPromise()}></Cards>
-                    </Suspense>
-                </div>
-                <div>
-                    <Carts></Carts>
+                    <div className="w-[70%] font-mono text-indigo-200 p-10">
+
+
+                        <Suspense fallback={<h2>Loading...</h2>}>
+                            <Cards handleCarts={handleCards} cardsPromise={cardsPromise()}></Cards>
+                        </Suspense>
+                    </div>
+                    <div className="w-[25%] max-h-screen overflow-y-scroll">
+                        <Carts carts={carts} setCarts={setCarts}></Carts>
+                    </div>
                 </div>
             </div>
+
         </>
     )
-}
+})
+
+export default Technology;

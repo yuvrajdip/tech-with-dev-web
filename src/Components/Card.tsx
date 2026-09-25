@@ -1,22 +1,25 @@
+// import type { Dispatch, SetStateAction } from "react"
+import { memo } from "react"
 import type { CardType } from "../type"
 
 export interface CardProp {
-    card: CardType
+    card: CardType,
+    handleCarts: (newCart: CardType) => void
 };
 
-export default function Card({ card }: CardProp) {
+const Card = memo(function Card({ card, handleCarts }: CardProp) {
 
     return (
         <>
-            <div className="card text-black bg-base-100 max-w-70 mx-auto shadow-sm border-amber-700 border-2 rounded-2xl text-3xl">
+            <div className="card text-amber-200 bg-black w-full mx-auto shadow-sm border-amber-700 border-1.5 rounded-2xl text-3xl">
                 <div className="flex justify-between p-3">
                     <figure>
                         <img
-                            className="h-12 w-12 bg-transparent"
+                            className="h-12 w-12 bg-yellow-400"
                             src={card.icon}
                             alt="Shoes" />
                     </figure>
-                    <button className="text-lg">{card.badge}</button>
+                    <button className="badge badge-xs badge-warning">{card.badge}</button>
                 </div>
                 <div className="card-body">
                     <h2 className="card-title">{card.name}</h2>
@@ -38,10 +41,14 @@ export default function Card({ card }: CardProp) {
                         </div>
                     </div>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-dash btn-secondary cursor-pointer">Add to Learnt</button>
+                        <button
+                            onClick={() => handleCarts(card)}
+                            className="btn btn-dash btn-secondary cursor-pointer">Add to Learnt</button>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
-}
+})
+
+export default Card;
