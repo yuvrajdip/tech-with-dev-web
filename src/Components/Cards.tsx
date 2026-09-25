@@ -1,9 +1,26 @@
+import { use } from "react";
+import type { CardType } from "../type";
 import Card from "./Card";
 
-export default function Cards() {
+export interface CardsProps {
+    cardsPromise: Promise<CardType[]>
+};
+
+export default function Cards({ cardsPromise }: CardsProps) {
+
+    const cards = use(cardsPromise);
+    console.log(cards);
+
     return (
         <>
-            <Card></Card>
+            <div className="mx-3 my-8 grid grid-cols-3 gap-2.5">
+                {
+                    cards.map((card) => <>
+                        <Card card={card}></Card>
+                    </>)
+                }
+            </div>
+
         </>
     )
 }
