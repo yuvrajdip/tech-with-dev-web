@@ -8,3 +8,8 @@ export interface CardType {
     difficulty: string
     badge: string
 };
+
+export interface RestoredCart {
+    id: string,
+    learnt: boolean
+};

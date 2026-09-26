@@ -1,15 +1,16 @@
-import { memo, use } from "react";
-import type { CardType } from "../type";
+import { memo, use, useState, type Dispatch, type SetStateAction } from "react";
+import type { CardType, RestoredCart } from "../type";
 import Card from "./Card";
 
 export interface CardsProps {
     cardsPromise: Promise<CardType[]>,
-    handleCarts: (newCart: CardType) => void
+    handleCarts: (newCart: CardType) => void,
 };
 
 const Cards = memo(function Cards({ cardsPromise, handleCarts }: CardsProps) {
 
     const cards = use(cardsPromise);
+
     // console.log(cards);
 
     return (

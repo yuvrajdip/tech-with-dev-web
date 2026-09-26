@@ -1,13 +1,13 @@
-// import type { Dispatch, SetStateAction } from "react"
-import { memo } from "react"
-import type { CardType } from "../type"
+import { memo, useState } from "react"
+import type { CardType, RestoredCart } from "../type"
 
 export interface CardProp {
     card: CardType,
-    handleCarts: (newCart: CardType) => void
+    handleCarts: (newCart: CardType) => void,
 };
 
 const Card = memo(function Card({ card, handleCarts }: CardProp) {
+    const [learnt, setLearnt] = useState<boolean>(false);
 
     return (
         <>
@@ -42,8 +42,21 @@ const Card = memo(function Card({ card, handleCarts }: CardProp) {
                     </div>
                     <div className="card-actions justify-end">
                         <button
-                            onClick={() => handleCarts(card)}
-                            className="btn btn-dash btn-secondary cursor-pointer">Add to Learnt</button>
+                            onClick={() => {
+                                handleCarts(card)
+                                setLearnt(true);
+                            }}
+                            className={
+                                learnt ? `btn btn-secondary cursor-pointer` : `btn btn-dash btn-secondary cursor-pointer`
+                            }
+                            disabled={
+                                learnt ? true : false
+                            }
+                        >
+                            {
+                                learnt ? `Added to Read Blogs` : `Add to Learnt`
+                            }
+                        </button>
                     </div>
                 </div>
             </div >

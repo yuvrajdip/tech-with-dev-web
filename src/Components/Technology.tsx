@@ -3,7 +3,7 @@ import Cards from "./Cards";
 import Carts from "./Carts";
 import type { CardType } from "../type";
 
-const cardsPromise = async (): Promise<CardType[]> => {
+const cardsFetch = async (): Promise<CardType[]> => {
     const res = await fetch("https://gist.githubusercontent.com/yuvrajdip/600c149a1767c2745c219e849cf0fbfd/raw/29fbf55c013c811f6ee1a12a6c90594923b5ee7a/gistfile1.txt");
     const data = await res.json();
 
@@ -12,7 +12,10 @@ const cardsPromise = async (): Promise<CardType[]> => {
 
 const Technology = memo(function Technology() {
 
+    const [cardsPromise] = useState(() => cardsFetch());
+
     const [carts, setCarts] = useState<CardType[]>([]);
+
 
     const handleCards = (newCart: CardType) => {
         setCarts([
@@ -32,7 +35,7 @@ const Technology = memo(function Technology() {
 
 
                         <Suspense fallback={<h2>Loading...</h2>}>
-                            <Cards handleCarts={handleCards} cardsPromise={cardsPromise()}></Cards>
+                            <Cards handleCarts={handleCards} cardsPromise={cardsPromise}></Cards>
                         </Suspense>
                     </div>
                     <div className="w-[25%] max-h-screen overflow-y-scroll">

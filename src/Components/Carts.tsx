@@ -1,10 +1,10 @@
 import { memo, useState, type Dispatch, type SetStateAction } from "react";
-import type { CardType } from "../type";
+import type { CardType, RestoredCart } from "../type";
 import Cart from "./Cart";
 
 export interface CartsProps {
     carts: CardType[],
-    setCarts: Dispatch<SetStateAction<CardType[]>>
+    setCarts: Dispatch<SetStateAction<CardType[]>>,
 };
 
 export default function Carts({ carts, setCarts }: CartsProps) {
@@ -31,7 +31,6 @@ export default function Carts({ carts, setCarts }: CartsProps) {
                         <Cart
                             cart={cart}
                             handleCartsAfterDelete={handleCartsAfterDelete}
-                        // setClickedDelete={setClickedDelete}
                         ></Cart>)
                 }
 
